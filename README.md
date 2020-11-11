@@ -1,6 +1,8 @@
 # karabiner tenkeyless keybindings
 
+Custom complex-modifications for [karabiner-elements](https://karabiner-elements.pqrs.org/).
 Adds key-remapping layers that aim to replicate the experience of using a tenkeyless keyboard with layer support.
+
 
 ## Modifiers:
 
