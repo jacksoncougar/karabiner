@@ -1,5 +1,5 @@
 {
-  "title": "Tenkeyless",
+  "title": "60% keyboard layout with layers",
   "rules": [
     {
       "description": "[modifier] CapsLock enables Layer 1",
@@ -79,7 +79,7 @@
       ]
     },
     {
-      "description": "[layer: 1] x-k to left-shift",
+      "description": "[layer: 1] x-k to kill-line (without copy)",
       "manipulators": [
         {
           "conditions": [
@@ -884,6 +884,127 @@
             }
           ],
           "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "[layer: 0] disable keys outside of 60% percent layout",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer_1",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "layer_2",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "cmd",
+              "type": "variable_if",
+              "value": 0
+            }
+          ],
+          "from": {
+            "key_code": "right_arrow",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": []
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer_1",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "layer_2",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "cmd",
+              "type": "variable_if",
+              "value": 0
+            }
+          ],
+          "from": {
+            "key_code": "down_arrow",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": []
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer_1",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "layer_2",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "cmd",
+              "type": "variable_if",
+              "value": 0
+            }
+          ],
+          "from": {
+            "key_code": "left_arrow",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": []
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer_1",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "layer_2",
+              "type": "variable_if",
+              "value": 0
+            },
+            {
+              "name": "cmd",
+              "type": "variable_if",
+              "value": 0
+            }
+          ],
+          "from": {
+            "key_code": "up_arrow",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": []
         }
       ]
     }
