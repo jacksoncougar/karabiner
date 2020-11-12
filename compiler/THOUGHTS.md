@@ -5,12 +5,14 @@
 Creating anything using the json format was pretty painful; it would be nice to have a human usable 
 domain specific language for creating keyboard layers with simple key remappings.
 
-MVP features:
-- layers can have sets of mapping, toggles, or extend another layer's mappings.
-- the 'is' keyword defines a straight one-to-one key remapping that works with all modifiers.
-- the 'nothing' keyword can be used to disable a key, or create a layer that only has remapped keys.
+MVP features:    
+- [ ] Key remappings are grouped into sets.
+- [ ] Layers are enabled while holding down a toggle key.
+- [ ] Layers can include sets, toggles, or extend another layer's mappings.
+- [ ] The `is` keyword defines a straight one-to-one key remapping that works with all modifiers.
+- [ ] The `nothing` keyword can be used to disable a key, or create a layer that only has remapped keys (unampped keys are remapped to nothing).
 
-### Example
+### Language example implementation
 
 ```
 capslock toggles layer1
@@ -84,11 +86,11 @@ Keys:
     EXTENDS_STATEMENT   is EXTENDS_KEYWORD LAYER_NAME
                         or EXTENDS_KEYWORD NOTHING_KEYWORD
 
-    HAS_STATEMENT       is HAS_KEYWORD SET_NAME
+    HAS_STATEMENT       is HAS_KEYWORD SET_NAME SET_KEYWORD
 
     TOGGLE_STATEMENT    is KEY_NAME TOGGLE_KEYWORD LAYER_NAME
 
-    SET_STATEMENT       is IS_STATMENT
+    SET_STATEMENT       is IS_STATEMENT
 
     LAYER_STATEMENT     is HAS_STATMENT
                         or EXTENDS_STATMENT
