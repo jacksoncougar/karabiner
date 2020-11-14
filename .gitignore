@@ -4,3 +4,5 @@ automatic_backups/*
 gradle/
 compiler/grammer/node_modules/*
 compiler/grammar/node_modules/**
+compiler/.settings/
+compiler/grammar/.settings/
