@@ -6,3 +6,4 @@ compiler/grammer/node_modules/*
 compiler/grammar/node_modules/**
 compiler/.settings/
 compiler/grammar/.settings/
+compiler/grammar/app/src/antlr/.antlr/

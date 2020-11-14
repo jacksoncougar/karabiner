@@ -1,10 +1,11 @@
 // Generated from src/antlr/KLL.g4 by ANTLR 4.7.3-SNAPSHOT
-
+// @ts-nocheck
 
 import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
 
 import { ConfigContext } from "./KLLParser";
 import { Global_statementContext } from "./KLLParser";
+import { BlankContext } from "./KLLParser";
 import { Is_statementContext } from "./KLLParser";
 import { Extends_statementContext } from "./KLLParser";
 import { Has_statementContext } from "./KLLParser";
@@ -45,6 +46,17 @@ export interface KLLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitGlobal_statement?: (ctx: Global_statementContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `KLLParser.blank`.
+	 * @param ctx the parse tree
+	 */
+	enterBlank?: (ctx: BlankContext) => void;
+	/**
+	 * Exit a parse tree produced by `KLLParser.blank`.
+	 * @param ctx the parse tree
+	 */
+	exitBlank?: (ctx: BlankContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `KLLParser.is_statement`.

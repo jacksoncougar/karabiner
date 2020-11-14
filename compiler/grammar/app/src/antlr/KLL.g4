@@ -2,13 +2,16 @@ grammar KLL;
 
 // GRAMMAR
 
-config: EOL* global_statement+ EOF;
+config: global_statement+ EOF;
 
 global_statement:
-	is_statement
+	blank
+	| is_statement
 	| toggle_statement
 	| layer_block
 	| set_block;
+
+blank: WS* EOL+;
 
 is_statement:
 	KEY_NAME IS_KEYWORD KEY_NAME EOL+

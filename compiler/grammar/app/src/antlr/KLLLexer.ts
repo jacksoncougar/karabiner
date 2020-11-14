@@ -14,6 +14,7 @@ import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
 
 import * as Utils from "antlr4ts/misc/Utils";
 
+
 export class KLLLexer extends Lexer {
 	public static readonly IS_KEYWORD = 1;
 	public static readonly EXTENDS_KEYWORD = 2;

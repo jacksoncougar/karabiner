@@ -1,10 +1,11 @@
 // Generated from src/antlr/KLL.g4 by ANTLR 4.7.3-SNAPSHOT
-
+// @ts-nocheck
 
 import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { ConfigContext } from "./KLLParser";
 import { Global_statementContext } from "./KLLParser";
+import { BlankContext } from "./KLLParser";
 import { Is_statementContext } from "./KLLParser";
 import { Extends_statementContext } from "./KLLParser";
 import { Has_statementContext } from "./KLLParser";
@@ -40,6 +41,13 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitGlobal_statement?: (ctx: Global_statementContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KLLParser.blank`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitBlank?: (ctx: BlankContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KLLParser.is_statement`.

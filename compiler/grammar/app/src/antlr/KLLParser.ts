@@ -44,24 +44,25 @@ export class KLLParser extends Parser {
 	public static readonly WS = 14;
 	public static readonly RULE_config = 0;
 	public static readonly RULE_global_statement = 1;
-	public static readonly RULE_is_statement = 2;
-	public static readonly RULE_extends_statement = 3;
-	public static readonly RULE_has_statement = 4;
-	public static readonly RULE_toggle_statement = 5;
-	public static readonly RULE_set_statement = 6;
-	public static readonly RULE_layer_statement = 7;
-	public static readonly RULE_layer_statements = 8;
-	public static readonly RULE_set_statements = 9;
-	public static readonly RULE_create_named_layer = 10;
-	public static readonly RULE_create_named_set = 11;
-	public static readonly RULE_layer_block = 12;
-	public static readonly RULE_set_block = 13;
+	public static readonly RULE_blank = 2;
+	public static readonly RULE_is_statement = 3;
+	public static readonly RULE_extends_statement = 4;
+	public static readonly RULE_has_statement = 5;
+	public static readonly RULE_toggle_statement = 6;
+	public static readonly RULE_set_statement = 7;
+	public static readonly RULE_layer_statement = 8;
+	public static readonly RULE_layer_statements = 9;
+	public static readonly RULE_set_statements = 10;
+	public static readonly RULE_create_named_layer = 11;
+	public static readonly RULE_create_named_set = 12;
+	public static readonly RULE_layer_block = 13;
+	public static readonly RULE_set_block = 14;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"config", "global_statement", "is_statement", "extends_statement", "has_statement", 
-		"toggle_statement", "set_statement", "layer_statement", "layer_statements", 
-		"set_statements", "create_named_layer", "create_named_set", "layer_block", 
-		"set_block",
+		"config", "global_statement", "blank", "is_statement", "extends_statement", 
+		"has_statement", "toggle_statement", "set_statement", "layer_statement", 
+		"layer_statements", "set_statements", "create_named_layer", "create_named_set", 
+		"layer_block", "set_block",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
@@ -106,32 +107,18 @@ export class KLLParser extends Parser {
 			this.state = 31;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === KLLParser.EOL) {
+			do {
 				{
 				{
-				this.state = 28;
-				this.match(KLLParser.EOL);
+				this.state = 30;
+				this.global_statement();
 				}
 				}
 				this.state = 33;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			}
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KLLParser.CREATE_KEYWORD) | (1 << KLLParser.KEY_NAME) | (1 << KLLParser.EOL) | (1 << KLLParser.WS))) !== 0));
 			this.state = 35;
-			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			do {
-				{
-				{
-				this.state = 34;
-				this.global_statement();
-				}
-				}
-				this.state = 37;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			} while (_la === KLLParser.CREATE_KEYWORD || _la === KLLParser.KEY_NAME);
-			this.state = 39;
 			this.match(KLLParser.EOF);
 			}
 		}
@@ -154,37 +141,45 @@ export class KLLParser extends Parser {
 		let _localctx: Global_statementContext = new Global_statementContext(this._ctx, this.state);
 		this.enterRule(_localctx, 2, KLLParser.RULE_global_statement);
 		try {
-			this.state = 45;
+			this.state = 42;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 2, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 1, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 41;
-				this.is_statement();
+				this.state = 37;
+				this.blank();
 				}
 				break;
 
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 42;
-				this.toggle_statement();
+				this.state = 38;
+				this.is_statement();
 				}
 				break;
 
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 43;
-				this.layer_block();
+				this.state = 39;
+				this.toggle_statement();
 				}
 				break;
 
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 44;
+				this.state = 40;
+				this.layer_block();
+				}
+				break;
+
+			case 5:
+				this.enterOuterAlt(_localctx, 5);
+				{
+				this.state = 41;
 				this.set_block();
 				}
 				break;
@@ -205,63 +200,134 @@ export class KLLParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public is_statement(): Is_statementContext {
-		let _localctx: Is_statementContext = new Is_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 4, KLLParser.RULE_is_statement);
+	public blank(): BlankContext {
+		let _localctx: BlankContext = new BlankContext(this._ctx, this.state);
+		this.enterRule(_localctx, 4, KLLParser.RULE_blank);
 		let _la: number;
 		try {
-			this.state = 63;
+			let _alt: number;
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 47;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 5, this._ctx) ) {
-			case 1:
-				this.enterOuterAlt(_localctx, 1);
+			_la = this._input.LA(1);
+			while (_la === KLLParser.WS) {
 				{
-				this.state = 47;
-				this.match(KLLParser.KEY_NAME);
-				this.state = 48;
-				this.match(KLLParser.IS_KEYWORD);
+				{
+				this.state = 44;
+				this.match(KLLParser.WS);
+				}
+				}
 				this.state = 49;
-				this.match(KLLParser.KEY_NAME);
-				this.state = 51;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				do {
+			}
+			this.state = 51;
+			this._errHandler.sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
 					{
 					{
 					this.state = 50;
 					this.match(KLLParser.EOL);
 					}
 					}
-					this.state = 53;
-					this._errHandler.sync(this);
-					_la = this._input.LA(1);
-				} while (_la === KLLParser.EOL);
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				break;
-
-			case 2:
-				this.enterOuterAlt(_localctx, 2);
+				this.state = 53;
+				this._errHandler.sync(this);
+				_alt = this.interpreter.adaptivePredict(this._input, 3, this._ctx);
+			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public is_statement(): Is_statementContext {
+		let _localctx: Is_statementContext = new Is_statementContext(this._ctx, this.state);
+		this.enterRule(_localctx, 6, KLLParser.RULE_is_statement);
+		try {
+			let _alt: number;
+			this.state = 71;
+			this._errHandler.sync(this);
+			switch ( this.interpreter.adaptivePredict(this._input, 6, this._ctx) ) {
+			case 1:
+				this.enterOuterAlt(_localctx, 1);
 				{
 				this.state = 55;
 				this.match(KLLParser.KEY_NAME);
 				this.state = 56;
 				this.match(KLLParser.IS_KEYWORD);
 				this.state = 57;
-				this.match(KLLParser.NOTHING_KEYWORD);
+				this.match(KLLParser.KEY_NAME);
 				this.state = 59;
 				this._errHandler.sync(this);
-				_la = this._input.LA(1);
+				_alt = 1;
 				do {
-					{
-					{
-					this.state = 58;
-					this.match(KLLParser.EOL);
-					}
+					switch (_alt) {
+					case 1:
+						{
+						{
+						this.state = 58;
+						this.match(KLLParser.EOL);
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
 					}
 					this.state = 61;
 					this._errHandler.sync(this);
-					_la = this._input.LA(1);
-				} while (_la === KLLParser.EOL);
+					_alt = this.interpreter.adaptivePredict(this._input, 4, this._ctx);
+				} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+				}
+				break;
+
+			case 2:
+				this.enterOuterAlt(_localctx, 2);
+				{
+				this.state = 63;
+				this.match(KLLParser.KEY_NAME);
+				this.state = 64;
+				this.match(KLLParser.IS_KEYWORD);
+				this.state = 65;
+				this.match(KLLParser.NOTHING_KEYWORD);
+				this.state = 67;
+				this._errHandler.sync(this);
+				_alt = 1;
+				do {
+					switch (_alt) {
+					case 1:
+						{
+						{
+						this.state = 66;
+						this.match(KLLParser.EOL);
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+					}
+					this.state = 69;
+					this._errHandler.sync(this);
+					_alt = this.interpreter.adaptivePredict(this._input, 5, this._ctx);
+				} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 				}
 				break;
 			}
@@ -283,30 +349,30 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public extends_statement(): Extends_statementContext {
 		let _localctx: Extends_statementContext = new Extends_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 6, KLLParser.RULE_extends_statement);
+		this.enterRule(_localctx, 8, KLLParser.RULE_extends_statement);
 		let _la: number;
 		try {
-			this.state = 79;
+			this.state = 87;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 8, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 9, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 65;
+				this.state = 73;
 				this.match(KLLParser.EXTENDS_KEYWORD);
-				this.state = 66;
+				this.state = 74;
 				this.match(KLLParser.ID_NAME);
-				this.state = 68;
+				this.state = 76;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 67;
+					this.state = 75;
 					this.match(KLLParser.EOL);
 					}
 					}
-					this.state = 70;
+					this.state = 78;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				} while (_la === KLLParser.EOL);
@@ -316,21 +382,21 @@ export class KLLParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 72;
+				this.state = 80;
 				this.match(KLLParser.EXTENDS_KEYWORD);
-				this.state = 73;
+				this.state = 81;
 				this.match(KLLParser.NOTHING_KEYWORD);
-				this.state = 75;
+				this.state = 83;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 74;
+					this.state = 82;
 					this.match(KLLParser.EOL);
 					}
 					}
-					this.state = 77;
+					this.state = 85;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				} while (_la === KLLParser.EOL);
@@ -355,61 +421,17 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public has_statement(): Has_statementContext {
 		let _localctx: Has_statementContext = new Has_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 8, KLLParser.RULE_has_statement);
-		let _la: number;
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
-			this.state = 81;
-			this.match(KLLParser.HAS_KEYWORD);
-			this.state = 82;
-			this.match(KLLParser.ID_NAME);
-			this.state = 83;
-			this.match(KLLParser.SET_KEYWORD);
-			this.state = 85;
-			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			do {
-				{
-				{
-				this.state = 84;
-				this.match(KLLParser.EOL);
-				}
-				}
-				this.state = 87;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			} while (_la === KLLParser.EOL);
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	// @RuleVersion(0)
-	public toggle_statement(): Toggle_statementContext {
-		let _localctx: Toggle_statementContext = new Toggle_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, KLLParser.RULE_toggle_statement);
+		this.enterRule(_localctx, 10, KLLParser.RULE_has_statement);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 89;
-			this.match(KLLParser.KEY_NAME);
+			this.match(KLLParser.HAS_KEYWORD);
 			this.state = 90;
-			this.match(KLLParser.TOGGLES_KEYWORD);
-			this.state = 91;
 			this.match(KLLParser.ID_NAME);
+			this.state = 91;
+			this.match(KLLParser.SET_KEYWORD);
 			this.state = 93;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -441,13 +463,63 @@ export class KLLParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public set_statement(): Set_statementContext {
-		let _localctx: Set_statementContext = new Set_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, KLLParser.RULE_set_statement);
+	public toggle_statement(): Toggle_statementContext {
+		let _localctx: Toggle_statementContext = new Toggle_statementContext(this._ctx, this.state);
+		this.enterRule(_localctx, 12, KLLParser.RULE_toggle_statement);
 		try {
+			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 97;
+			this.match(KLLParser.KEY_NAME);
+			this.state = 98;
+			this.match(KLLParser.TOGGLES_KEYWORD);
+			this.state = 99;
+			this.match(KLLParser.ID_NAME);
+			this.state = 101;
+			this._errHandler.sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					this.state = 100;
+					this.match(KLLParser.EOL);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				this.state = 103;
+				this._errHandler.sync(this);
+				_alt = this.interpreter.adaptivePredict(this._input, 11, this._ctx);
+			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public set_statement(): Set_statementContext {
+		let _localctx: Set_statementContext = new Set_statementContext(this._ctx, this.state);
+		this.enterRule(_localctx, 14, KLLParser.RULE_set_statement);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 105;
 			this.is_statement();
 			}
 		}
@@ -468,29 +540,29 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public layer_statement(): Layer_statementContext {
 		let _localctx: Layer_statementContext = new Layer_statementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 14, KLLParser.RULE_layer_statement);
+		this.enterRule(_localctx, 16, KLLParser.RULE_layer_statement);
 		try {
-			this.state = 102;
+			this.state = 110;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case KLLParser.HAS_KEYWORD:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 99;
+				this.state = 107;
 				this.has_statement();
 				}
 				break;
 			case KLLParser.EXTENDS_KEYWORD:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 100;
+				this.state = 108;
 				this.extends_statement();
 				}
 				break;
 			case KLLParser.KEY_NAME:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 101;
+				this.state = 109;
 				this.toggle_statement();
 				}
 				break;
@@ -515,22 +587,22 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public layer_statements(): Layer_statementsContext {
 		let _localctx: Layer_statementsContext = new Layer_statementsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 16, KLLParser.RULE_layer_statements);
+		this.enterRule(_localctx, 18, KLLParser.RULE_layer_statements);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 105;
+			this.state = 113;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 104;
+				this.state = 112;
 				this.layer_statement();
 				}
 				}
-				this.state = 107;
+				this.state = 115;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KLLParser.EXTENDS_KEYWORD) | (1 << KLLParser.HAS_KEYWORD) | (1 << KLLParser.KEY_NAME))) !== 0));
@@ -553,22 +625,22 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public set_statements(): Set_statementsContext {
 		let _localctx: Set_statementsContext = new Set_statementsContext(this._ctx, this.state);
-		this.enterRule(_localctx, 18, KLLParser.RULE_set_statements);
+		this.enterRule(_localctx, 20, KLLParser.RULE_set_statements);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 110;
+			this.state = 118;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 109;
+				this.state = 117;
 				this.set_statement();
 				}
 				}
-				this.state = 112;
+				this.state = 120;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while (_la === KLLParser.KEY_NAME);
@@ -591,30 +663,30 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public create_named_layer(): Create_named_layerContext {
 		let _localctx: Create_named_layerContext = new Create_named_layerContext(this._ctx, this.state);
-		this.enterRule(_localctx, 20, KLLParser.RULE_create_named_layer);
+		this.enterRule(_localctx, 22, KLLParser.RULE_create_named_layer);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 114;
+			this.state = 122;
 			this.match(KLLParser.CREATE_KEYWORD);
-			this.state = 115;
+			this.state = 123;
 			this.match(KLLParser.LAYER_KEYWORD);
-			this.state = 116;
+			this.state = 124;
 			this.match(KLLParser.NAMED_KEYWORD);
-			this.state = 117;
+			this.state = 125;
 			this.match(KLLParser.ID_NAME);
-			this.state = 119;
+			this.state = 127;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 118;
+				this.state = 126;
 				this.match(KLLParser.EOL);
 				}
 				}
-				this.state = 121;
+				this.state = 129;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while (_la === KLLParser.EOL);
@@ -637,63 +709,19 @@ export class KLLParser extends Parser {
 	// @RuleVersion(0)
 	public create_named_set(): Create_named_setContext {
 		let _localctx: Create_named_setContext = new Create_named_setContext(this._ctx, this.state);
-		this.enterRule(_localctx, 22, KLLParser.RULE_create_named_set);
+		this.enterRule(_localctx, 24, KLLParser.RULE_create_named_set);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 123;
+			this.state = 131;
 			this.match(KLLParser.CREATE_KEYWORD);
-			this.state = 124;
-			this.match(KLLParser.SET_KEYWORD);
-			this.state = 125;
-			this.match(KLLParser.NAMED_KEYWORD);
-			this.state = 126;
-			this.match(KLLParser.ID_NAME);
-			this.state = 128;
-			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			do {
-				{
-				{
-				this.state = 127;
-				this.match(KLLParser.EOL);
-				}
-				}
-				this.state = 130;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			} while (_la === KLLParser.EOL);
-			}
-		}
-		catch (re) {
-			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
-				this._errHandler.reportError(this, re);
-				this._errHandler.recover(this, re);
-			} else {
-				throw re;
-			}
-		}
-		finally {
-			this.exitRule();
-		}
-		return _localctx;
-	}
-	// @RuleVersion(0)
-	public layer_block(): Layer_blockContext {
-		let _localctx: Layer_blockContext = new Layer_blockContext(this._ctx, this.state);
-		this.enterRule(_localctx, 24, KLLParser.RULE_layer_block);
-		let _la: number;
-		try {
-			this.enterOuterAlt(_localctx, 1);
-			{
 			this.state = 132;
-			this.create_named_layer();
+			this.match(KLLParser.SET_KEYWORD);
 			this.state = 133;
-			this.layer_statements();
+			this.match(KLLParser.NAMED_KEYWORD);
 			this.state = 134;
-			this.match(KLLParser.DONE_KEYWORD);
+			this.match(KLLParser.ID_NAME);
 			this.state = 136;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -725,33 +753,89 @@ export class KLLParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public set_block(): Set_blockContext {
-		let _localctx: Set_blockContext = new Set_blockContext(this._ctx, this.state);
-		this.enterRule(_localctx, 26, KLLParser.RULE_set_block);
-		let _la: number;
+	public layer_block(): Layer_blockContext {
+		let _localctx: Layer_blockContext = new Layer_blockContext(this._ctx, this.state);
+		this.enterRule(_localctx, 26, KLLParser.RULE_layer_block);
 		try {
+			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 140;
-			this.create_named_set();
+			this.create_named_layer();
 			this.state = 141;
-			this.set_statements();
+			this.layer_statements();
 			this.state = 142;
 			this.match(KLLParser.DONE_KEYWORD);
 			this.state = 144;
 			this._errHandler.sync(this);
-			_la = this._input.LA(1);
+			_alt = 1;
 			do {
-				{
-				{
-				this.state = 143;
-				this.match(KLLParser.EOL);
-				}
+				switch (_alt) {
+				case 1:
+					{
+					{
+					this.state = 143;
+					this.match(KLLParser.EOL);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
 				this.state = 146;
 				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			} while (_la === KLLParser.EOL);
+				_alt = this.interpreter.adaptivePredict(this._input, 17, this._ctx);
+			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public set_block(): Set_blockContext {
+		let _localctx: Set_blockContext = new Set_blockContext(this._ctx, this.state);
+		this.enterRule(_localctx, 28, KLLParser.RULE_set_block);
+		try {
+			let _alt: number;
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 148;
+			this.create_named_set();
+			this.state = 149;
+			this.set_statements();
+			this.state = 150;
+			this.match(KLLParser.DONE_KEYWORD);
+			this.state = 152;
+			this._errHandler.sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					this.state = 151;
+					this.match(KLLParser.EOL);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				this.state = 154;
+				this._errHandler.sync(this);
+				_alt = this.interpreter.adaptivePredict(this._input, 18, this._ctx);
+			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 			}
 		}
 		catch (re) {
@@ -770,67 +854,71 @@ export class KLLParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x10\x97\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x10\x9F\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
-		"\x0E\t\x0E\x04\x0F\t\x0F\x03\x02\x07\x02 \n\x02\f\x02\x0E\x02#\v\x02\x03" +
-		"\x02\x06\x02&\n\x02\r\x02\x0E\x02\'\x03\x02\x03\x02\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x05\x030\n\x03\x03\x04\x03\x04\x03\x04\x03\x04\x06\x046\n" +
-		"\x04\r\x04\x0E\x047\x03\x04\x03\x04\x03\x04\x03\x04\x06\x04>\n\x04\r\x04" +
-		"\x0E\x04?\x05\x04B\n\x04\x03\x05\x03\x05\x03\x05\x06\x05G\n\x05\r\x05" +
-		"\x0E\x05H\x03\x05\x03\x05\x03\x05\x06\x05N\n\x05\r\x05\x0E\x05O\x05\x05" +
-		"R\n\x05\x03\x06\x03\x06\x03\x06\x03\x06\x06\x06X\n\x06\r\x06\x0E\x06Y" +
+		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x03\x02\x06\x02\"\n\x02\r\x02\x0E" +
+		"\x02#\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x05\x03" +
+		"-\n\x03\x03\x04\x07\x040\n\x04\f\x04\x0E\x043\v\x04\x03\x04\x06\x046\n" +
+		"\x04\r\x04\x0E\x047\x03\x05\x03\x05\x03\x05\x03\x05\x06\x05>\n\x05\r\x05" +
+		"\x0E\x05?\x03\x05\x03\x05\x03\x05\x03\x05\x06\x05F\n\x05\r\x05\x0E\x05" +
+		"G\x05\x05J\n\x05\x03\x06\x03\x06\x03\x06\x06\x06O\n\x06\r\x06\x0E\x06" +
+		"P\x03\x06\x03\x06\x03\x06\x06\x06V\n\x06\r\x06\x0E\x06W\x05\x06Z\n\x06" +
 		"\x03\x07\x03\x07\x03\x07\x03\x07\x06\x07`\n\x07\r\x07\x0E\x07a\x03\b\x03" +
-		"\b\x03\t\x03\t\x03\t\x05\ti\n\t\x03\n\x06\nl\n\n\r\n\x0E\nm\x03\v\x06" +
-		"\vq\n\v\r\v\x0E\vr\x03\f\x03\f\x03\f\x03\f\x03\f\x06\fz\n\f\r\f\x0E\f" +
-		"{\x03\r\x03\r\x03\r\x03\r\x03\r\x06\r\x83\n\r\r\r\x0E\r\x84\x03\x0E\x03" +
+		"\b\x03\b\x03\b\x06\bh\n\b\r\b\x0E\bi\x03\t\x03\t\x03\n\x03\n\x03\n\x05" +
+		"\nq\n\n\x03\v\x06\vt\n\v\r\v\x0E\vu\x03\f\x06\fy\n\f\r\f\x0E\fz\x03\r" +
+		"\x03\r\x03\r\x03\r\x03\r\x06\r\x82\n\r\r\r\x0E\r\x83\x03\x0E\x03\x0E\x03" +
 		"\x0E\x03\x0E\x03\x0E\x06\x0E\x8B\n\x0E\r\x0E\x0E\x0E\x8C\x03\x0F\x03\x0F" +
-		"\x03\x0F\x03\x0F\x06\x0F\x93\n\x0F\r\x0F\x0E\x0F\x94\x03\x0F\x02\x02\x02" +
-		"\x10\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02" +
-		"\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x02\x02\x02\x9D\x02!\x03\x02" +
-		"\x02\x02\x04/\x03\x02\x02\x02\x06A\x03\x02\x02\x02\bQ\x03\x02\x02\x02" +
-		"\nS\x03\x02\x02\x02\f[\x03\x02\x02\x02\x0Ec\x03\x02\x02\x02\x10h\x03\x02" +
-		"\x02\x02\x12k\x03\x02\x02\x02\x14p\x03\x02\x02\x02\x16t\x03\x02\x02\x02" +
-		"\x18}\x03\x02\x02\x02\x1A\x86\x03\x02\x02\x02\x1C\x8E\x03\x02\x02\x02" +
-		"\x1E \x07\x0F\x02\x02\x1F\x1E\x03\x02\x02\x02 #\x03\x02\x02\x02!\x1F\x03" +
-		"\x02\x02\x02!\"\x03\x02\x02\x02\"%\x03\x02\x02\x02#!\x03\x02\x02\x02$" +
-		"&\x05\x04\x03\x02%$\x03\x02\x02\x02&\'\x03\x02\x02\x02\'%\x03\x02\x02" +
-		"\x02\'(\x03\x02\x02\x02()\x03\x02\x02\x02)*\x07\x02\x02\x03*\x03\x03\x02" +
-		"\x02\x02+0\x05\x06\x04\x02,0\x05\f\x07\x02-0\x05\x1A\x0E\x02.0\x05\x1C" +
-		"\x0F\x02/+\x03\x02\x02\x02/,\x03\x02\x02\x02/-\x03\x02\x02\x02/.\x03\x02" +
-		"\x02\x020\x05\x03\x02\x02\x0212\x07\r\x02\x0223\x07\x03\x02\x0235\x07" +
-		"\r\x02\x0246\x07\x0F\x02\x0254\x03\x02\x02\x0267\x03\x02\x02\x0275\x03" +
-		"\x02\x02\x0278\x03\x02\x02\x028B\x03\x02\x02\x029:\x07\r\x02\x02:;\x07" +
-		"\x03\x02\x02;=\x07\f\x02\x02<>\x07\x0F\x02\x02=<\x03\x02\x02\x02>?\x03" +
-		"\x02\x02\x02?=\x03\x02\x02\x02?@\x03\x02\x02\x02@B\x03\x02\x02\x02A1\x03" +
-		"\x02\x02\x02A9\x03\x02\x02\x02B\x07\x03\x02\x02\x02CD\x07\x04\x02\x02" +
-		"DF\x07\x0E\x02\x02EG\x07\x0F\x02\x02FE\x03\x02\x02\x02GH\x03\x02\x02\x02" +
-		"HF\x03\x02\x02\x02HI\x03\x02\x02\x02IR\x03\x02\x02\x02JK\x07\x04\x02\x02" +
-		"KM\x07\f\x02\x02LN\x07\x0F\x02\x02ML\x03\x02\x02\x02NO\x03\x02\x02\x02" +
-		"OM\x03\x02\x02\x02OP\x03\x02\x02\x02PR\x03\x02\x02\x02QC\x03\x02\x02\x02" +
-		"QJ\x03\x02\x02\x02R\t\x03\x02\x02\x02ST\x07\x05\x02\x02TU\x07\x0E\x02" +
-		"\x02UW\x07\x06\x02\x02VX\x07\x0F\x02\x02WV\x03\x02\x02\x02XY\x03\x02\x02" +
-		"\x02YW\x03\x02\x02\x02YZ\x03\x02\x02\x02Z\v\x03\x02\x02\x02[\\\x07\r\x02" +
-		"\x02\\]\x07\x07\x02\x02]_\x07\x0E\x02\x02^`\x07\x0F\x02\x02_^\x03\x02" +
-		"\x02\x02`a\x03\x02\x02\x02a_\x03\x02\x02\x02ab\x03\x02\x02\x02b\r\x03" +
-		"\x02\x02\x02cd\x05\x06\x04\x02d\x0F\x03\x02\x02\x02ei\x05\n\x06\x02fi" +
-		"\x05\b\x05\x02gi\x05\f\x07\x02he\x03\x02\x02\x02hf\x03\x02\x02\x02hg\x03" +
-		"\x02\x02\x02i\x11\x03\x02\x02\x02jl\x05\x10\t\x02kj\x03\x02\x02\x02lm" +
-		"\x03\x02\x02\x02mk\x03\x02\x02\x02mn\x03\x02\x02\x02n\x13\x03\x02\x02" +
-		"\x02oq\x05\x0E\b\x02po\x03\x02\x02\x02qr\x03\x02\x02\x02rp\x03\x02\x02" +
-		"\x02rs\x03\x02\x02\x02s\x15\x03\x02\x02\x02tu\x07\b\x02\x02uv\x07\t\x02" +
-		"\x02vw\x07\n\x02\x02wy\x07\x0E\x02\x02xz\x07\x0F\x02\x02yx\x03\x02\x02" +
-		"\x02z{\x03\x02\x02\x02{y\x03\x02\x02\x02{|\x03\x02\x02\x02|\x17\x03\x02" +
-		"\x02\x02}~\x07\b\x02\x02~\x7F\x07\x06\x02\x02\x7F\x80\x07\n\x02\x02\x80" +
-		"\x82\x07\x0E\x02\x02\x81\x83\x07\x0F\x02\x02\x82\x81\x03\x02\x02\x02\x83" +
-		"\x84\x03\x02\x02\x02\x84\x82\x03\x02\x02\x02\x84\x85\x03\x02\x02\x02\x85" +
-		"\x19\x03\x02\x02\x02\x86\x87\x05\x16\f\x02\x87\x88\x05\x12\n\x02\x88\x8A" +
-		"\x07\v\x02\x02\x89\x8B\x07\x0F\x02\x02\x8A\x89\x03\x02\x02\x02\x8B\x8C" +
-		"\x03\x02\x02\x02\x8C\x8A\x03\x02\x02\x02\x8C\x8D\x03\x02\x02\x02\x8D\x1B" +
-		"\x03\x02\x02\x02\x8E\x8F\x05\x18\r\x02\x8F\x90\x05\x14\v\x02\x90\x92\x07" +
-		"\v\x02\x02\x91\x93\x07\x0F\x02\x02\x92\x91\x03\x02\x02\x02\x93\x94\x03" +
-		"\x02\x02\x02\x94\x92\x03\x02\x02\x02\x94\x95\x03\x02\x02\x02\x95\x1D\x03" +
-		"\x02\x02\x02\x14!\'/7?AHOQYahmr{\x84\x8C\x94";
+		"\x03\x0F\x03\x0F\x06\x0F\x93\n\x0F\r\x0F\x0E\x0F\x94\x03\x10\x03\x10\x03" +
+		"\x10\x03\x10\x06\x10\x9B\n\x10\r\x10\x0E\x10\x9C\x03\x10\x02\x02\x02\x11" +
+		"\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14" +
+		"\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02\x02\x02\x02\xA6\x02!\x03" +
+		"\x02\x02\x02\x04,\x03\x02\x02\x02\x061\x03\x02\x02\x02\bI\x03\x02\x02" +
+		"\x02\nY\x03\x02\x02\x02\f[\x03\x02\x02\x02\x0Ec\x03\x02\x02\x02\x10k\x03" +
+		"\x02\x02\x02\x12p\x03\x02\x02\x02\x14s\x03\x02\x02\x02\x16x\x03\x02\x02" +
+		"\x02\x18|\x03\x02\x02\x02\x1A\x85\x03\x02\x02\x02\x1C\x8E\x03\x02\x02" +
+		"\x02\x1E\x96\x03\x02\x02\x02 \"\x05\x04\x03\x02! \x03\x02\x02\x02\"#\x03" +
+		"\x02\x02\x02#!\x03\x02\x02\x02#$\x03\x02\x02\x02$%\x03\x02\x02\x02%&\x07" +
+		"\x02\x02\x03&\x03\x03\x02\x02\x02\'-\x05\x06\x04\x02(-\x05\b\x05\x02)" +
+		"-\x05\x0E\b\x02*-\x05\x1C\x0F\x02+-\x05\x1E\x10\x02,\'\x03\x02\x02\x02" +
+		",(\x03\x02\x02\x02,)\x03\x02\x02\x02,*\x03\x02\x02\x02,+\x03\x02\x02\x02" +
+		"-\x05\x03\x02\x02\x02.0\x07\x10\x02\x02/.\x03\x02\x02\x0203\x03\x02\x02" +
+		"\x021/\x03\x02\x02\x0212\x03\x02\x02\x0225\x03\x02\x02\x0231\x03\x02\x02" +
+		"\x0246\x07\x0F\x02\x0254\x03\x02\x02\x0267\x03\x02\x02\x0275\x03\x02\x02" +
+		"\x0278\x03\x02\x02\x028\x07\x03\x02\x02\x029:\x07\r\x02\x02:;\x07\x03" +
+		"\x02\x02;=\x07\r\x02\x02<>\x07\x0F\x02\x02=<\x03\x02\x02\x02>?\x03\x02" +
+		"\x02\x02?=\x03\x02\x02\x02?@\x03\x02\x02\x02@J\x03\x02\x02\x02AB\x07\r" +
+		"\x02\x02BC\x07\x03\x02\x02CE\x07\f\x02\x02DF\x07\x0F\x02\x02ED\x03\x02" +
+		"\x02\x02FG\x03\x02\x02\x02GE\x03\x02\x02\x02GH\x03\x02\x02\x02HJ\x03\x02" +
+		"\x02\x02I9\x03\x02\x02\x02IA\x03\x02\x02\x02J\t\x03\x02\x02\x02KL\x07" +
+		"\x04\x02\x02LN\x07\x0E\x02\x02MO\x07\x0F\x02\x02NM\x03\x02\x02\x02OP\x03" +
+		"\x02\x02\x02PN\x03\x02\x02\x02PQ\x03\x02\x02\x02QZ\x03\x02\x02\x02RS\x07" +
+		"\x04\x02\x02SU\x07\f\x02\x02TV\x07\x0F\x02\x02UT\x03\x02\x02\x02VW\x03" +
+		"\x02\x02\x02WU\x03\x02\x02\x02WX\x03\x02\x02\x02XZ\x03\x02\x02\x02YK\x03" +
+		"\x02\x02\x02YR\x03\x02\x02\x02Z\v\x03\x02\x02\x02[\\\x07\x05\x02\x02\\" +
+		"]\x07\x0E\x02\x02]_\x07\x06\x02\x02^`\x07\x0F\x02\x02_^\x03\x02\x02\x02" +
+		"`a\x03\x02\x02\x02a_\x03\x02\x02\x02ab\x03\x02\x02\x02b\r\x03\x02\x02" +
+		"\x02cd\x07\r\x02\x02de\x07\x07\x02\x02eg\x07\x0E\x02\x02fh\x07\x0F\x02" +
+		"\x02gf\x03\x02\x02\x02hi\x03\x02\x02\x02ig\x03\x02\x02\x02ij\x03\x02\x02" +
+		"\x02j\x0F\x03\x02\x02\x02kl\x05\b\x05\x02l\x11\x03\x02\x02\x02mq\x05\f" +
+		"\x07\x02nq\x05\n\x06\x02oq\x05\x0E\b\x02pm\x03\x02\x02\x02pn\x03\x02\x02" +
+		"\x02po\x03\x02\x02\x02q\x13\x03\x02\x02\x02rt\x05\x12\n\x02sr\x03\x02" +
+		"\x02\x02tu\x03\x02\x02\x02us\x03\x02\x02\x02uv\x03\x02\x02\x02v\x15\x03" +
+		"\x02\x02\x02wy\x05\x10\t\x02xw\x03\x02\x02\x02yz\x03\x02\x02\x02zx\x03" +
+		"\x02\x02\x02z{\x03\x02\x02\x02{\x17\x03\x02\x02\x02|}\x07\b\x02\x02}~" +
+		"\x07\t\x02\x02~\x7F\x07\n\x02\x02\x7F\x81\x07\x0E\x02\x02\x80\x82\x07" +
+		"\x0F\x02\x02\x81\x80\x03\x02\x02\x02\x82\x83\x03\x02\x02\x02\x83\x81\x03" +
+		"\x02\x02\x02\x83\x84\x03\x02\x02\x02\x84\x19\x03\x02\x02\x02\x85\x86\x07" +
+		"\b\x02\x02\x86\x87\x07\x06\x02\x02\x87\x88\x07\n\x02\x02\x88\x8A\x07\x0E" +
+		"\x02\x02\x89\x8B\x07\x0F\x02\x02\x8A\x89\x03\x02\x02\x02\x8B\x8C\x03\x02" +
+		"\x02\x02\x8C\x8A\x03\x02\x02\x02\x8C\x8D\x03\x02\x02\x02\x8D\x1B\x03\x02" +
+		"\x02\x02\x8E\x8F\x05\x18\r\x02\x8F\x90\x05\x14\v\x02\x90\x92\x07\v\x02" +
+		"\x02\x91\x93\x07\x0F\x02\x02\x92\x91\x03\x02\x02\x02\x93\x94\x03\x02\x02" +
+		"\x02\x94\x92\x03\x02\x02\x02\x94\x95\x03\x02\x02\x02\x95\x1D\x03\x02\x02" +
+		"\x02\x96\x97\x05\x1A\x0E\x02\x97\x98\x05\x16\f\x02\x98\x9A\x07\v\x02\x02" +
+		"\x99\x9B\x07\x0F\x02\x02\x9A\x99\x03\x02\x02\x02\x9B\x9C\x03\x02\x02\x02" +
+		"\x9C\x9A\x03\x02\x02\x02\x9C\x9D\x03\x02\x02\x02\x9D\x1F\x03\x02\x02\x02" +
+		"\x15#,17?GIPWYaipuz\x83\x8C\x94\x9C";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!KLLParser.__ATN) {
@@ -844,15 +932,6 @@ export class KLLParser extends Parser {
 
 export class ConfigContext extends ParserRuleContext {
 	public EOF(): TerminalNode { return this.getToken(KLLParser.EOF, 0); }
-	public EOL(): TerminalNode[];
-	public EOL(i: number): TerminalNode;
-	public EOL(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(KLLParser.EOL);
-		} else {
-			return this.getToken(KLLParser.EOL, i);
-		}
-	}
 	public global_statement(): Global_statementContext[];
 	public global_statement(i: number): Global_statementContext;
 	public global_statement(i?: number): Global_statementContext | Global_statementContext[] {
@@ -891,6 +970,9 @@ export class ConfigContext extends ParserRuleContext {
 
 
 export class Global_statementContext extends ParserRuleContext {
+	public blank(): BlankContext | undefined {
+		return this.tryGetRuleContext(0, BlankContext);
+	}
 	public is_statement(): Is_statementContext | undefined {
 		return this.tryGetRuleContext(0, Is_statementContext);
 	}
@@ -924,6 +1006,53 @@ export class Global_statementContext extends ParserRuleContext {
 	public accept<Result>(visitor: KLLVisitor<Result>): Result {
 		if (visitor.visitGlobal_statement) {
 			return visitor.visitGlobal_statement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class BlankContext extends ParserRuleContext {
+	public WS(): TerminalNode[];
+	public WS(i: number): TerminalNode;
+	public WS(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(KLLParser.WS);
+		} else {
+			return this.getToken(KLLParser.WS, i);
+		}
+	}
+	public EOL(): TerminalNode[];
+	public EOL(i: number): TerminalNode;
+	public EOL(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(KLLParser.EOL);
+		} else {
+			return this.getToken(KLLParser.EOL, i);
+		}
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return KLLParser.RULE_blank; }
+	// @Override
+	public enterRule(listener: KLLListener): void {
+		if (listener.enterBlank) {
+			listener.enterBlank(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: KLLListener): void {
+		if (listener.exitBlank) {
+			listener.exitBlank(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: KLLVisitor<Result>): Result {
+		if (visitor.visitBlank) {
+			return visitor.visitBlank(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
