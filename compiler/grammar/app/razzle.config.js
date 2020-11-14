@@ -15,10 +15,12 @@ module.exports = {
   }) {
     if (target === "web") {
       webpackConfig.node = { fs: "empty" };
+      webpackConfig.module.rules.push({ test: /\.tsx?$/, loader: "ts-loader" });
       // client only
     }
     if (target === "node") {
       webpackConfig.node = { fs: "empty" };
+
       // server only
     }
     if (dev) {

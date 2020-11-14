@@ -9,6 +9,8 @@ function KLLVisitor() {
 	return this;
 }
 
+let context = [];
+
 KLLVisitor.prototype = Object.create(antlr4.tree.ParseTreeVisitor.prototype);
 KLLVisitor.prototype.constructor = KLLVisitor;
 
@@ -86,6 +88,17 @@ KLLVisitor.prototype.visitCreate_named_set = function(ctx) {
 
 // Visit a parse tree produced by KLLParser#layer_block.
 KLLVisitor.prototype.visitLayer_block = function(ctx) {
+  // console.log(ctx);
+  // const isExtending = ctx.children[1].children.find(node => node.ruleIndex === KLLParser.);
+  console.log(ctx);
+  const name = ctx.children[0].children[3].symbol.text;
+  context.push({
+    layer: {
+      name,
+      sets: [],
+    },
+  });
+  console.log(context);
   return this.visitChildren(ctx);
 };
 

@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "./react.svg";
 import "./Home.css";
 
-import antlr4 from "antlr4";
-import KLLLexer from "./antlr/KLLLexer.js";
-import KLLParser from "./antlr/KLLParser.js";
-import { KLLVisitor } from "./KLLVisitor.js";
+import { KLLLexer } from "./antlr/KLLLexer";
+import { KLLParser } from "./antlr/KLLParser";
+import { myKLLVisitor } from "./KLLVisitor";
+import { CharStreams } from "antlr4ts/CharStreams";
+import { CommonTokenStream } from "antlr4ts/CommonTokenStream";
 
 class Home extends React.Component {
   render() {
@@ -53,39 +53,22 @@ class Home extends React.Component {
       i is 9
     done
     `;
-    const chars = new antlr4.InputStream(input);
-    const lexer = new KLLLexer.KLLLexer(chars);
-    const tokens = new antlr4.CommonTokenStream(lexer);
-    const parser = new KLLParser.KLLParser(tokens);
-    const visitor = new KLLVisitor();
-    parser.buildParseTrees = true;
+    const chars = CharStreams.fromString(input);
+    const lexer = new KLLLexer(chars);
+    const tokens = new CommonTokenStream(lexer);
+    const parser = new KLLParser(tokens);
+    const visitor = new myKLLVisitor();
+    parser.buildParseTree = true;
+
     const tree = parser.config();
-    console.log(tree);
-
-    class Visitor {
-      visitChildren(ctx) {
-        if (!ctx) {
-          return;
-        }
-
-        if (ctx.children) {
-          return ctx.children.map((child) => {
-            if (child.children && child.children.length !== 0) {
-              return child.accept(this);
-            } else {
-              return child.getText();
-            }
-          });
-        }
-      }
-    }
-
-    console.log(tree.accept(visitor));
+    //console.log(tree);
+    // tree.accept(visitor);
+    visitor.visit(tree);
 
     return (
       <div className="Home">
         <div className="Home-header">
-          <img src={logo} className="Home-logo" alt="logo" />
+          <img className="Home-logo" alt="logo" />
           <h2>Welcome to Razzle</h2>
         </div>
         <p className="Home-intro">

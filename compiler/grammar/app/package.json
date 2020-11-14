@@ -6,18 +6,25 @@
     "start": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "start:prod": "NODE_ENV=production node build/server.js",
+    "generate-parser": "antlr4ts -visitor src/antlr/KLL.g4"
   },
   "dependencies": {
     "antlr4": "^4.8.0",
+    "antlr4-tool": "^1.1.1",
     "antlr4-webpack-loader": "^0.1.1",
+    "antlr4ts": "^0.5.0-alpha.3",
     "express": "4.17.1",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-router-dom": "5.2.0"
   },
   "devDependencies": {
-    "razzle": "3.3.7"
+    "@babel/preset-typescript": "^7.12.1",
+    "antlr4ts-cli": "^0.5.0-alpha.3",
+    "razzle": "3.3.7",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5"
   },
   "browser": {
     "crypto": false,
