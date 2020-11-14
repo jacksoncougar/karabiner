@@ -1,2 +1,5 @@
 karabiner.json
 automatic_backups/*
+.gradle/
+gradle/
+*/node_modules/
