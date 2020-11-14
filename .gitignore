@@ -2,4 +2,5 @@ karabiner.json
 automatic_backups/*
 .gradle/
 gradle/
-*/node_modules/
+compiler/grammer/node_modules/*
+compiler/grammar/node_modules/**
