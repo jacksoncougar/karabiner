@@ -1,0 +1,28 @@
+apply plugin: 'antlr'
+
+dependencies {
+  antlr "org.antlr:antlr4:4.7.2"
+  compile "org.antlr:antlr4-runtime:4.7.2"
+  testCompile 'junit:junit:4.12'
+}
+
+repositories {
+    mavenCentral()
+}
+
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ['-Dlanguage=JavaScript', '-visitor']
+    outputDirectory = new File("app2/src/antlr".toString())
+}
+compileJava.dependsOn generateGrammarSource
+sourceSets {
+    generated {
+        java.srcDir 'generated-src/antlr/main/'
+    }
+}
+compileJava.source sourceSets.generated.java, sourceSets.main.java
+
+clean{
+    delete "generated-src"
+}
