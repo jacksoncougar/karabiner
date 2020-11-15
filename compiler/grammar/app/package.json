@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "antlr4": "^4.8.0",
-    "antlr4-tool": "^1.1.1",
-    "antlr4-webpack-loader": "^0.1.1",
     "antlr4ts": "^0.5.0-alpha.3",
     "express": "4.17.1",
     "react": "16.14.0",
