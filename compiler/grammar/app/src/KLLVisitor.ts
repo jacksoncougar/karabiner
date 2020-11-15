@@ -41,7 +41,7 @@ class SymbolTable {
   constructor() {
     this.scopes = [];
     this.scopes.push({
-      symbols: [{ name: "nothing", sets: [], toggles: [] }],
+      symbols: [{ name: "nothing", sets: ['nothing'], toggles: [] }, {name:'nothing', mappings: []}],
     });
     this.scopes.push(new Scope());
   }
@@ -49,6 +49,12 @@ class SymbolTable {
   get nothing(): LayerMeta {
     if (isLayer(this.scopes[0].symbols[0])) {
       return this.scopes[0].symbols[0];
+    }
+  }
+
+  get nothing_set(): SetMeta {
+    if (isSet(this.scopes[0].symbols[1])) {
+      return this.scopes[0].symbols[1];
     }
   }
 
@@ -86,9 +92,10 @@ export class SetVisitor
   }
 
   visitIs_statement(ctx: Is_statementContext) {
+    if (!ctx) return;
     const map: IMapping = {
-      from: ctx.children[0].text,
-      to: ctx.children[2].text,
+      from: ctx?.children?.[0]?.text,
+      to: ctx?.children?.[2]?.text,
     };
     return [map];
   }
@@ -104,10 +111,12 @@ export class SetBlockVisitor
   }
 
   visitCreate_named_set(ctx: Create_named_setContext) {
-    this.meta.name = ctx.children[3].text;
+    if (!ctx) return;
+    this.meta.name = ctx?.children[3]?.text;
   }
 
   visitSet_statements(ctx: Set_statementsContext) {
+    if (!ctx) return;
     this.meta.mappings = new SetVisitor().visitChildren(ctx);
   }
 }
@@ -122,23 +131,27 @@ export class LayerBlockVisitor
   }
 
   visitToggle_statement(ctx: Toggle_statementContext) {
+    if (!ctx) return;
     this.meta.toggles.push({
-      key: ctx.children[0].text,
-      layer: ctx.children[2].text,
+      key: ctx?.children[0]?.text,
+      layer: ctx?.children[2]?.text,
     });
   }
 
   visitHas_statement(ctx: Has_statementContext) {
-    this.meta.sets.push(ctx.children[1].text);
+    if (!ctx) return;
+    this.meta.sets.push(ctx?.children[1]?.text);
   }
 
   visitExtends_statement(ctx: Extends_statementContext) {
+    if (!ctx) return;
     if (ctx.children[1].text != "nothing")
-      this.meta.parent = ctx.children[1].text;
+      this.meta.parent = ctx?.children[1]?.text;
   }
 
   visitCreate_named_layer(ctx: Create_named_layerContext) {
-    this.meta.name = ctx.children[3].text;
+    if (!ctx) return;
+    this.meta.name = ctx?.children[3]?.text;
   }
 }
 
@@ -171,7 +184,7 @@ export class LayerSynthesisVisitor
     };
 
     let getConditions = (layer: LayerMeta): string[] => {
-      if (layer.parent) {
+      if (layer.parent && layer.name !== layer.parent) {
         return [...getConditions(findParent(layer.parent)), layer.name];
       } else if (layer.name === "nothing") return [];
       else return [layer.name];
@@ -181,7 +194,7 @@ export class LayerSynthesisVisitor
       const result = this.symbolTable.scopes
         .flatMap((scopes) => scopes.symbols)
         .filter(
-          (symbol): symbol is SetMeta => isSet(symbol) && symbol.name == set
+          (symbol): symbol is SetMeta => isSet(symbol) && symbol?.name == set
         )[0];
       return result?.mappings ?? [];
     };
@@ -214,9 +227,18 @@ export class myKLLVisitor
 
   visitToggle_statement(ctx: Toggle_statementContext) {
     this.symbolTable.nothing.toggles.push({
-      key: ctx.children[0].text,
-      layer: ctx.children[2].text,
+      key: ctx?.children[0]?.text,
+      layer: ctx?.children[2]?.text,
     });
+  }
+
+  visitIs_statement(ctx: Is_statementContext) {
+    if (!ctx) return;
+    const map: IMapping = {
+      from: ctx?.children?.[0]?.text,
+      to: ctx?.children?.[2]?.text,
+    };
+    this.symbolTable.nothing_set.mappings.push(map);
   }
 
   visitLayer_block(ctx: Layer_blockContext) {
