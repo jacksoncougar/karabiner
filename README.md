@@ -28,3 +28,9 @@ Adds key-remapping layers that aim to replicate the experience of using a 60% ke
 |`t`,`g`        | `/`,`*`                      |
 |`o`,`l`        | `-`,`+`                      |
 
+## TODO:
+
+- [x] Create domain specific language (DSL) for karabiner 
+- [ ] Add language support for modifier keys
+- [ ] Add language support for other conditions (e.g. active application)
+- [ ] Add function to compiler to generate documentation for bindings?
