@@ -10,3 +10,5 @@ compiler/grammar/app/src/antlr/.antlr/
 assets/complex_modifications/*
 !assets/complex_modifications/60percent.json
 .vscode/
+
+**/.vscode/
