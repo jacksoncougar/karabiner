@@ -43,20 +43,24 @@ interface To {
 }
 
 interface SetVariable {
-  name: string;
-  value: number;
+  set_variable: {
+    name: string;
+    value: number;
+  };
 }
 
 class ToggleRule {
   constructor(key: string, layer: string, conditions: string[]) {
     this.description = `${key} toggles ${layer}`;
-    this.manipulators.from = {
+    this.manipulators[0].from = {
       key_code: key,
       modifiers: { optional: ["any"] },
     };
-    this.manipulators.to = { name: layer, value: 1 };
-    this.manipulators.to_after_key_up = { name: layer, value: 0 };
-    this.manipulators.conditions = conditions.map((condition) => {
+    this.manipulators[0].to = [{ set_variable: { name: layer, value: 1 } }];
+    this.manipulators[0].to_after_key_up = [
+      { set_variable: { name: layer, value: 0 } },
+    ];
+    this.manipulators[0].conditions = conditions.map((condition) => {
       return { name: condition, type: "variable_if", value: 1 };
     });
   }
@@ -65,25 +69,27 @@ class ToggleRule {
     type: "basic";
     conditions: Condition[];
     from?: From;
-    to?: SetVariable;
-    to_after_key_up?: SetVariable;
-  } = {
-    type: "basic",
-    conditions: [],
-  };
+    to?: SetVariable[];
+    to_after_key_up?: SetVariable[];
+  }[] = [
+    {
+      type: "basic",
+      conditions: [],
+    }
+  ];
 }
 
 class MappingRule {
   constructor(layer: string, mapping: IMapping, conditions: string[]) {
     this.description = `${layer}: ${mapping.from} is ${mapping.to}`;
-    this.manipulators.conditions = conditions.map((condition: string) => {
+    this.manipulators[0].conditions = conditions.map((condition: string) => {
       return { name: condition, type: "variable_if", value: 1 };
     });
-    this.manipulators.from = {
+    this.manipulators[0].from = {
       key_code: mapping.from,
       modifiers: { optional: ["any"] },
     };
-    this.manipulators.to = [{ key_code: mapping.to }];
+    this.manipulators[0].to = [{ key_code: mapping.to }];
   }
   description: string;
   manipulators: {
@@ -91,8 +97,10 @@ class MappingRule {
     conditions: Condition[];
     from?: From;
     to?: To[];
-  } = {
-    type: "basic",
-    conditions: [],
-  };
+  }[] = [
+    {
+      type: "basic",
+      conditions: [],
+    }
+  ];
 }
