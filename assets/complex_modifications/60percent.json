@@ -2,21 +2,10 @@
   "title": "60% keyboard layout with layers",
   "rules": [
     {
-      "description": "[modifier] CapsLock enables Layer 1",
       "manipulators": [
         {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
+          "type": "basic",
+          "conditions": [],
           "from": {
             "key_code": "caps_lock",
             "modifiers": {
@@ -28,7 +17,7 @@
           "to": [
             {
               "set_variable": {
-                "name": "layer_1",
+                "name": "layer1",
                 "value": 1
               }
             }
@@ -36,472 +25,27 @@
           "to_after_key_up": [
             {
               "set_variable": {
-                "name": "layer_1",
+                "name": "layer1",
                 "value": 0
               }
             }
-          ],
-          "type": "basic"
+          ]
         }
-      ]
+      ],
+      "description": "caps_lock toggles layer1"
     },
     {
-      "description": "[layer: 1] a to left-shift",
       "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "a",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "left_shift"
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[layer: 1] x-k to kill-line (without copy)",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "x",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "set_variable": {
-                "name": "cmd",
-                "value": 1
-              }
-            }
-          ],
-          "to_delayed_action": {
-            "to_if_invoked": [
-              {
-                "set_variable": {
-                  "name": "cmd",
-                  "value": 0
-                }
-              }
-            ]
-          },
-          "parameters": {
-            "basic.to_delayed_action_delay_milliseconds": 1000
-          },
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
-          "from": {
-            "key_code": "k",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "set_variable": {
-                "name": "cmd",
-                "value": 0
-              }
-            },
-            {
-              "key_code": "home"
-            },
-            {
-              "key_code": "end", "modifiers": ["shift"]
-            },
-            {
-              "key_code": "delete_or_backspace"
-            }            
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[layer: 1] i,j,k,l to arrow keys",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "j",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "left_arrow"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "k",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "down_arrow"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "l",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "right_arrow"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "i",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "up_arrow"
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[layer: 1] h,n to home,end",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "h",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "home"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "n",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "end"
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[layer: 1] [,' to delete,backspace",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "open_bracket",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "delete_forward"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "quote",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "delete_or_backspace"
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[modifier] CapsLock + Tab enables Layer 2",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "tab",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "set_variable": {
-                "name": "layer_2",
-                "value": 1
-              }
-            }
-          ],
-          "to_after_key_up": [
-            {
-              "set_variable": {
-                "name": "layer_2",
-                "value": 0
-              }
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "[layer: 2] numpad",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -516,20 +60,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_0"
+              "key_code": "0"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: b is 0"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -544,20 +93,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_1"
+              "key_code": "1"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: n is 1"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -572,20 +126,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_2"
+              "key_code": "2"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: m is 2"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -600,20 +159,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_3"
+              "key_code": "3"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: comma is 3"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -628,20 +192,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_4"
+              "key_code": "4"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: h is 4"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -656,20 +225,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_5"
+              "key_code": "5"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: j is 5"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -684,20 +258,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_6"
+              "key_code": "6"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: k is 6"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -712,20 +291,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_7"
+              "key_code": "7"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: y is 7"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -740,20 +324,25 @@
           },
           "to": [
             {
-              "key_code": "keypad_8"
+              "key_code": "8"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: u is 8"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             },
             {
-              "name": "layer_2",
+              "name": "layer2",
               "type": "variable_if",
               "value": 1
             }
@@ -768,26 +357,26 @@
           },
           "to": [
             {
-              "key_code": "keypad_9"
+              "key_code": "9"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer2: i is 9"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             }
           ],
           "from": {
-            "key_code": "t",
+            "key_code": "tab",
             "modifiers": {
               "optional": [
                 "any"
@@ -796,26 +385,37 @@
           },
           "to": [
             {
-              "key_code": "keypad_slash"
+              "set_variable": {
+                "name": "layer2",
+                "value": 1
+              }
             }
           ],
-          "type": "basic"
-        },
+          "to_after_key_up": [
+            {
+              "set_variable": {
+                "name": "layer2",
+                "value": 0
+              }
+            }
+          ]
+        }
+      ],
+      "description": "tab toggles layer2"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             }
           ],
           "from": {
-            "key_code": "g",
+            "key_code": "i",
             "modifiers": {
               "optional": [
                 "any"
@@ -824,26 +424,26 @@
           },
           "to": [
             {
-              "key_code": "keypad_asterisk"
+              "key_code": "up_arrow"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer1: i is up_arrow"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 1
-            },
-            {
-              "name": "layer_2",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             }
           ],
           "from": {
-            "key_code": "o",
+            "key_code": "j",
             "modifiers": {
               "optional": [
                 "any"
@@ -852,20 +452,48 @@
           },
           "to": [
             {
-              "key_code": "keypad_hyphen"
+              "key_code": "left_arrow"
             }
-          ],
-          "type": "basic"
-        },
+          ]
+        }
+      ],
+      "description": "layer1: j is left_arrow"
+    },
+    {
+      "manipulators": [
         {
+          "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
-            },
+            }
+          ],
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
             {
-              "name": "layer_2",
+              "key_code": "down_arrow"
+            }
+          ]
+        }
+      ],
+      "description": "layer1: k is down_arrow"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer1",
               "type": "variable_if",
               "value": 1
             }
@@ -880,133 +508,348 @@
           },
           "to": [
             {
-              "key_code": "keypad_plus"
+              "key_code": "right_arrow"
             }
-          ],
-          "type": "basic"
+          ]
         }
-      ]
+      ],
+      "description": "layer1: l is right_arrow"
     },
     {
-      "description": "[layer: 0] disable keys outside of 60% percent layout",
       "manipulators": [
         {
           "type": "basic",
           "conditions": [
             {
-              "name": "layer_1",
+              "name": "layer1",
               "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
+              "value": 1
             }
           ],
           "from": {
-            "key_code": "right_arrow",
+            "key_code": "a",
             "modifiers": {
               "optional": [
                 "any"
               ]
             }
           },
-          "to": []
-        },
-        {
-          "type": "basic",
-          "conditions": [
+          "to": [
             {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
+              "key_code": "left_shift"
             }
-          ],
-          "from": {
-            "key_code": "down_arrow",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": []
-        },
-        {
-          "type": "basic",
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "left_arrow",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": []
-        },
-        {
-          "type": "basic",
-          "conditions": [
-            {
-              "name": "layer_1",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "layer_2",
-              "type": "variable_if",
-              "value": 0
-            },
-            {
-              "name": "cmd",
-              "type": "variable_if",
-              "value": 0
-            }
-          ],
-          "from": {
-            "key_code": "up_arrow",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": []
+          ]
         }
-      ]
+      ],
+      "description": "layer1: a is left_shift"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "layer1",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ]
+        }
+      ],
+      "description": "layer1: s is left_control"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "b",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "0"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: b is 0"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "n",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "1"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: n is 1"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "m",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "2"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: m is 2"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "comma",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "3"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: comma is 3"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "h",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "4"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: h is 4"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "5"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: j is 5"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "6"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: k is 6"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "y",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "7"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: y is 7"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "u",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "8"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: u is 8"
+    },
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "name": "numpad",
+              "type": "variable_if",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "i",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "9"
+            }
+          ]
+        }
+      ],
+      "description": "numpad: i is 9"
     }
   ]
 }
