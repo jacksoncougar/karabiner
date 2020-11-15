@@ -1,11 +1,13 @@
-import React from "react";
 import "./Home.css";
 
-import { KLLLexer } from "./antlr/KLLLexer";
-import { KLLParser } from "./antlr/KLLParser";
-import { myKLLVisitor } from "./KLLVisitor";
+import { LayerSynthesisVisitor, myKLLVisitor } from "./KLLVisitor";
+
 import { CharStreams } from "antlr4ts/CharStreams";
 import { CommonTokenStream } from "antlr4ts/CommonTokenStream";
+import { KLLLexer } from "./antlr/KLLLexer";
+import { KLLParser } from "./antlr/KLLParser";
+import { KarabinerCompiler } from "./Compiler";
+import React from "react";
 
 class Home extends React.Component {
   render() {
@@ -18,7 +20,7 @@ class Home extends React.Component {
 
     create layer named layer2
       extends layer1
-      has numpad2 set
+      has numpad set
     done
     
     create layer named layer1
@@ -39,7 +41,7 @@ class Home extends React.Component {
       a is left_shift
       s is left_control
     done
-    
+
     create set named numpad
       b is 0
       n is 1
@@ -61,31 +63,14 @@ class Home extends React.Component {
     parser.buildParseTree = true;
 
     const tree = parser.config();
-    //console.log(tree);
-    // tree.accept(visitor);
-    visitor.visit(tree);
+    const table = visitor.visit(tree);
+    const layers = new LayerSynthesisVisitor(table).visit(tree);
+    const output = new KarabinerCompiler().compile(layers);
 
     return (
-      <div className="Home">
-        <div className="Home-header">
-          <img className="Home-logo" alt="logo" />
-          <h2>Welcome to Razzle</h2>
-        </div>
-        <p className="Home-intro">
-          To get started, edit <code>src/App.js</code> or{" "}
-          <code>src/Home.js</code> and save to reload.
-        </p>
-        <ul className="Home-resources">
-          <li>
-            <a href="https://github.com/jaredpalmer/razzle">Docs</a>
-          </li>
-          <li>
-            <a href="https://github.com/jaredpalmer/razzle/issues">Issues</a>
-          </li>
-          <li>
-            <a href="https://palmer.chat">Community Slack</a>
-          </li>
-        </ul>
+      <div className="compiler">
+        <pre>{input}</pre>
+        <pre>{output}</pre>
       </div>
     );
   }
