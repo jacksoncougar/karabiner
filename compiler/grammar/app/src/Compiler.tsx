@@ -10,7 +10,12 @@ export class KarabinerCompiler {
         let mappings = [];
         if (layer.toggles) {
           toggles = layer.toggles.map((toggle) => {
-            return new ToggleRule(toggle.key, toggle.layer, layer.conditions);
+            return new ToggleRule(
+              layer.name,
+              toggle.key,
+              toggle.layer,
+              layer.conditions
+            );
           });
         }
         if (layer.mappings) {
@@ -50,15 +55,21 @@ interface SetVariable {
 }
 
 class ToggleRule {
-  constructor(key: string, layer: string, conditions: string[]) {
-    this.description = `${key} toggles ${layer}`;
+  constructor(
+    layer: string,
+    key: string,
+    toLayer: string,
+    conditions: string[]
+  ) {
+    layer = layer === "nothing" ? "base" : layer;
+    this.description = `${layer}: ${key} toggles ${toLayer}`;
     this.manipulators[0].from = {
       key_code: key,
       modifiers: { optional: ["any"] },
     };
-    this.manipulators[0].to = [{ set_variable: { name: layer, value: 1 } }];
+    this.manipulators[0].to = [{ set_variable: { name: toLayer, value: 1 } }];
     this.manipulators[0].to_after_key_up = [
-      { set_variable: { name: layer, value: 0 } },
+      { set_variable: { name: toLayer, value: 0 } },
     ];
     this.manipulators[0].conditions = conditions.map((condition) => {
       return { name: condition, type: "variable_if", value: 1 };
@@ -75,12 +86,13 @@ class ToggleRule {
     {
       type: "basic",
       conditions: [],
-    }
+    },
   ];
 }
 
 class MappingRule {
   constructor(layer: string, mapping: IMapping, conditions: string[]) {
+    layer = layer === "nothing" ? "base" : layer;
     this.description = `${layer}: ${mapping.from} is ${mapping.to}`;
     this.manipulators[0].conditions = conditions.map((condition: string) => {
       return { name: condition, type: "variable_if", value: 1 };
@@ -89,7 +101,8 @@ class MappingRule {
       key_code: mapping.from,
       modifiers: { optional: ["any"] },
     };
-    this.manipulators[0].to = [{ key_code: mapping.to }];
+    this.manipulators[0].to =
+      mapping.to === "nothing" ? [] : [{ key_code: mapping.to }];
   }
   description: string;
   manipulators: {
