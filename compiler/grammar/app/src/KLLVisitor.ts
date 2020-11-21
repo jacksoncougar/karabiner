@@ -184,10 +184,7 @@ export class LayerSynthesisVisitor
     };
 
     let getConditions = (layer: LayerMeta): string[] => {
-      if (layer.parent && layer.name !== layer.parent) {
-        return [...getConditions(findParent(layer.parent)), layer.name];
-      } else if (layer.name === "nothing") return [];
-      else return [layer.name];
+      return [];
     };
 
     let getMappings = (set: string): IMapping[] => {
