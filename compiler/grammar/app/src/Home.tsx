@@ -13,48 +13,46 @@ import { ANTLRErrorListener } from "antlr4ts/ANTLRErrorListener";
 function Home(props) {
   let textareaRef = useRef(null);
   let [input, setInput] = useState(`
-    caps_lock toggles layer1
-    up_arrow is nothing
-    left_arrow is nothing
-    down_arrow is nothing
-    right_arrow is nothing
+    
+toggle navigation with caps_lock
 
-    create layer named layer2
-      extends layer1
-      has numpad set
-    done
-    
-    create layer named layer1
-      has nav set
-      tab toggles layer2
-    done
-    
-    create layer named numpad
-      extends nothing
-      has numpad set
-    done
-    
-    create set named nav
-      i is up_arrow
-      j is left_arrow
-      k is down_arrow
-      l is right_arrow
-      a is left_shift
-      s is left_control
-    done
+up_arrow is nothing
+left_arrow is nothing
+down_arrow is nothing
+right_arrow is nothing
 
-    create set named numpad
-      b is 0
-      n is 1
-      m is 2
-      comma is 3
-      h is 4
-      j is 5
-      k is 6
-      y is 7
-      u is 8
-      i is 9
-    done
+navigation layer 
+    i is up_arrow
+    j is left_arrow
+    k is down_arrow
+    l is right_arrow
+    h is home
+    n is end
+    s is left_shift
+    a is left_control
+    open_bracket is delete_forward
+    quote is delete_or_backspace
+
+    toggle numpad with tab
+
+done
+
+numpad layer extends navigation
+    b is keypad_0
+    n is keypad_1
+    m is keypad_2
+    comma is keypad_3
+    h is keypad_4
+    j is keypad_5
+    k is keypad_6
+    y is keypad_7
+    u is keypad_8
+    i is keypad_9
+    t is keypad_slash
+    g is keypad_asterisk
+    o is keypad_hyphen
+    l is keypad_plus
+done
     `);
   const chars = CharStreams.fromString(input);
   let output = "";
