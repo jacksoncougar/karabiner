@@ -8,55 +8,50 @@ global_statement:
 	blank
 	| is_statement
 	| toggle_statement
-	| layer_block
-	| set_block;
+	| layer_block;
 
 blank: WS* EOL+;
 
 is_statement:
-	KEY_NAME IS_KEYWORD KEY_NAME EOL+
+	CHORD_EXPRESSION IS_KEYWORD CHORD_EXPRESSION EOL+
 	| KEY_NAME IS_KEYWORD NOTHING_KEYWORD EOL+;
 
 extends_statement:
 	EXTENDS_KEYWORD ID_NAME EOL+
 	| EXTENDS_KEYWORD NOTHING_KEYWORD EOL+;
 
-has_statement: HAS_KEYWORD ID_NAME SET_KEYWORD EOL+;
-
 toggle_statement: KEY_NAME TOGGLES_KEYWORD ID_NAME EOL+;
 
 set_statement: is_statement;
 
 layer_statement:
-	has_statement
+	swap_statement
 	| extends_statement
-	| toggle_statement;
+	| toggle_statement
+	| is_statement;
 
 layer_statements: layer_statement+;
 
 set_statements: set_statement+;
 
-create_named_layer:
-	CREATE_KEYWORD LAYER_KEYWORD NAMED_KEYWORD ID_NAME EOL+;
+swap_statement: SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME EOL+;
 
-create_named_set:
-	CREATE_KEYWORD SET_KEYWORD NAMED_KEYWORD ID_NAME EOL+;
+create_named_layer: ID_NAME LAYER_KEYWORD EOL+;
 
 layer_block:
 	create_named_layer layer_statements DONE_KEYWORD EOL+;
-
-set_block: create_named_set set_statements DONE_KEYWORD EOL+;
 
 // TOKENS
 
 IS_KEYWORD: 'is';
 EXTENDS_KEYWORD: 'extends';
-HAS_KEYWORD: 'has';
-SET_KEYWORD: 'set';
 TOGGLES_KEYWORD: 'toggles';
-CREATE_KEYWORD: 'create';
 LAYER_KEYWORD: 'layer';
-NAMED_KEYWORD: 'named';
+WHEN_KEYWORD: 'when';
+WITH_KEYWORD: 'with';
+AND_KEYWORD: 'and';
+SWAP_KEYWORD: 'swap';
+BUNDLE_KEYWORD: 'bundle';
 DONE_KEYWORD: 'done';
 NOTHING_KEYWORD: 'nothing';
 
@@ -271,6 +266,14 @@ KEY_NAME:
 
 ID_NAME: [a-zA-Z0-9]+;
 
+fragment MODIFIER: 'ctrl' | 'alt' | 'shift';
+
+fragment KEY: ((MODIFIER '+')+)? KEY_NAME ('+' KEY_NAME)*;
+
+CHORD_EXPRESSION: KEY (WS KEY)*;
+
 EOL: '\r\n' | '\r' | '\n';
 
 WS: [\t ]+ -> skip;
+
+COMMENT: '#' [^EOL]+ EOL -> skip;
