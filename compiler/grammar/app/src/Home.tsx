@@ -12,14 +12,14 @@ import { ANTLRErrorListener } from "antlr4ts/ANTLRErrorListener";
 
 function Home(props) {
   let textareaRef = useRef(null);
-  let [input, setInput] = useState(`
-    
-toggle navigation with caps_lock
+  let [input, setInput] = useState(`toggle navigation with caps_lock
 
 up_arrow is nothing
 left_arrow is nothing
 down_arrow is nothing
 right_arrow is nothing
+
+swap left_command and left_alt when bundle is www.parsec.tv
 
 navigation layer 
     i is up_arrow

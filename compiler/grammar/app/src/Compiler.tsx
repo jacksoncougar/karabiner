@@ -1,6 +1,7 @@
 import { IMapping } from "./IMapping";
 import { Layer } from "./Layer";
 import { Toggle_statementContext } from "./antlr/KLLParser";
+import { IApplicationCondition, ICondition } from "./ICondition";
 
 export class KarabinerCompiler {
   compile(layers: Layer[]): string {
@@ -34,6 +35,11 @@ interface Condition {
   name: string;
   type: "variable_if";
   value: number;
+}
+
+interface ApplicationCondition {
+  type: "frontmost_application_if";
+  bundle_identifiers: string[];
 }
 
 interface From {
@@ -90,6 +96,16 @@ class ToggleRule {
   ];
 }
 
+function isApplicationCondition(
+  object: any
+): object is ICondition | IApplicationCondition {
+  return object && "bundle" in object;
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 class MappingRule {
   constructor(layer: string, mapping: IMapping, conditions: string[]) {
     layer = layer === "nothing" ? "base" : layer;
@@ -97,6 +113,18 @@ class MappingRule {
     this.manipulators[0].conditions = conditions.map((condition: string) => {
       return { name: condition, type: "variable_if", value: 1 };
     });
+
+    this.manipulators[0].conditions.push(
+      ...(((mapping.conditions
+        ?.filter((x): x is IApplicationCondition => isApplicationCondition(x))
+        .map((x) => {
+          return {
+            type: x.type,
+            bundle_identifiers: [escapeRegExp(x.bundle)],
+          } as ApplicationCondition;
+        }) ?? [])))
+    );
+
     this.manipulators[0].from = {
       key_code: mapping.from,
       modifiers: { optional: ["any"] },
@@ -107,13 +135,13 @@ class MappingRule {
   description: string;
   manipulators: {
     type: "basic";
-    conditions: Condition[];
+    conditions: (Condition | ApplicationCondition)[];
     from?: From;
     to?: To[];
   }[] = [
     {
       type: "basic",
       conditions: [],
-    }
+    },
   ];
 }
