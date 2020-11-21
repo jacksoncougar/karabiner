@@ -1,25 +1,25 @@
 
 toggle navigation with caps_lock
 
-caps_lock is escape when pressed alone
+#caps_lock is escape when pressed alone
 
 up_arrow is nothing
 left_arrow is nothing
 down_arrow is nothing
 right_arrow is nothing
 
-when using Parsec
+when bundle is www.parsec.tv
     swap left_command and left_alt 
 done
 
 # augment does not supress the keypress
-augment fn with emoji
+#augment fn with emoji
 
-emoji layer
-    f puts 🔥
-done
+#emoji layer
+#    f puts 🔥
+#done
 
-navigation layer  
+navigation layer 
     i is up_arrow
     j is left_arrow
     k is down_arrow
@@ -33,15 +33,10 @@ navigation layer
 
     toggle numpad with tab
 
-    x k is home shift+end ctrl+x
+    #x k is home shift+end ctrl+x
 done
 
-parsec application
-    bundle is www.parsec.tv
-done
-
-numpad layer
-    extends navigation
+numpad layer extends navigation
     b is keypad_0
     n is keypad_1
     m is keypad_2
