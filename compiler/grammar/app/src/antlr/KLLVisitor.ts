@@ -1,23 +1,20 @@
 // Generated from src/antlr/KLL.g4 by ANTLR 4.7.3-SNAPSHOT
-// @ts-nocheck
+
 
 import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { ConfigContext } from "./KLLParser";
 import { Global_statementContext } from "./KLLParser";
-import { BlankContext } from "./KLLParser";
+import { EmptyContext } from "./KLLParser";
 import { Is_statementContext } from "./KLLParser";
 import { Extends_statementContext } from "./KLLParser";
-import { Has_statementContext } from "./KLLParser";
 import { Toggle_statementContext } from "./KLLParser";
 import { Set_statementContext } from "./KLLParser";
 import { Layer_statementContext } from "./KLLParser";
 import { Layer_statementsContext } from "./KLLParser";
-import { Set_statementsContext } from "./KLLParser";
-import { Create_named_layerContext } from "./KLLParser";
-import { Create_named_setContext } from "./KLLParser";
+import { Swap_statementContext } from "./KLLParser";
+import { Layer_headerContext } from "./KLLParser";
 import { Layer_blockContext } from "./KLLParser";
-import { Set_blockContext } from "./KLLParser";
 
 
 /**
@@ -43,11 +40,11 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitGlobal_statement?: (ctx: Global_statementContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `KLLParser.blank`.
+	 * Visit a parse tree produced by `KLLParser.empty`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitBlank?: (ctx: BlankContext) => Result;
+	visitEmpty?: (ctx: EmptyContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KLLParser.is_statement`.
@@ -62,13 +59,6 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitExtends_statement?: (ctx: Extends_statementContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `KLLParser.has_statement`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitHas_statement?: (ctx: Has_statementContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KLLParser.toggle_statement`.
@@ -99,25 +89,18 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitLayer_statements?: (ctx: Layer_statementsContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `KLLParser.set_statements`.
+	 * Visit a parse tree produced by `KLLParser.swap_statement`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitSet_statements?: (ctx: Set_statementsContext) => Result;
+	visitSwap_statement?: (ctx: Swap_statementContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `KLLParser.create_named_layer`.
+	 * Visit a parse tree produced by `KLLParser.layer_header`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitCreate_named_layer?: (ctx: Create_named_layerContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `KLLParser.create_named_set`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitCreate_named_set?: (ctx: Create_named_setContext) => Result;
+	visitLayer_header?: (ctx: Layer_headerContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KLLParser.layer_block`.
@@ -125,12 +108,5 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitLayer_block?: (ctx: Layer_blockContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `KLLParser.set_block`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitSet_block?: (ctx: Set_blockContext) => Result;
 }
 

@@ -1,23 +1,20 @@
 // Generated from src/antlr/KLL.g4 by ANTLR 4.7.3-SNAPSHOT
-// @ts-nocheck
+
 
 import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
 
 import { ConfigContext } from "./KLLParser";
 import { Global_statementContext } from "./KLLParser";
-import { BlankContext } from "./KLLParser";
+import { EmptyContext } from "./KLLParser";
 import { Is_statementContext } from "./KLLParser";
 import { Extends_statementContext } from "./KLLParser";
-import { Has_statementContext } from "./KLLParser";
 import { Toggle_statementContext } from "./KLLParser";
 import { Set_statementContext } from "./KLLParser";
 import { Layer_statementContext } from "./KLLParser";
 import { Layer_statementsContext } from "./KLLParser";
-import { Set_statementsContext } from "./KLLParser";
-import { Create_named_layerContext } from "./KLLParser";
-import { Create_named_setContext } from "./KLLParser";
+import { Swap_statementContext } from "./KLLParser";
+import { Layer_headerContext } from "./KLLParser";
 import { Layer_blockContext } from "./KLLParser";
-import { Set_blockContext } from "./KLLParser";
 
 
 /**
@@ -48,15 +45,15 @@ export interface KLLListener extends ParseTreeListener {
 	exitGlobal_statement?: (ctx: Global_statementContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `KLLParser.blank`.
+	 * Enter a parse tree produced by `KLLParser.empty`.
 	 * @param ctx the parse tree
 	 */
-	enterBlank?: (ctx: BlankContext) => void;
+	enterEmpty?: (ctx: EmptyContext) => void;
 	/**
-	 * Exit a parse tree produced by `KLLParser.blank`.
+	 * Exit a parse tree produced by `KLLParser.empty`.
 	 * @param ctx the parse tree
 	 */
-	exitBlank?: (ctx: BlankContext) => void;
+	exitEmpty?: (ctx: EmptyContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `KLLParser.is_statement`.
@@ -79,17 +76,6 @@ export interface KLLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitExtends_statement?: (ctx: Extends_statementContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `KLLParser.has_statement`.
-	 * @param ctx the parse tree
-	 */
-	enterHas_statement?: (ctx: Has_statementContext) => void;
-	/**
-	 * Exit a parse tree produced by `KLLParser.has_statement`.
-	 * @param ctx the parse tree
-	 */
-	exitHas_statement?: (ctx: Has_statementContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `KLLParser.toggle_statement`.
@@ -136,37 +122,26 @@ export interface KLLListener extends ParseTreeListener {
 	exitLayer_statements?: (ctx: Layer_statementsContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `KLLParser.set_statements`.
+	 * Enter a parse tree produced by `KLLParser.swap_statement`.
 	 * @param ctx the parse tree
 	 */
-	enterSet_statements?: (ctx: Set_statementsContext) => void;
+	enterSwap_statement?: (ctx: Swap_statementContext) => void;
 	/**
-	 * Exit a parse tree produced by `KLLParser.set_statements`.
+	 * Exit a parse tree produced by `KLLParser.swap_statement`.
 	 * @param ctx the parse tree
 	 */
-	exitSet_statements?: (ctx: Set_statementsContext) => void;
+	exitSwap_statement?: (ctx: Swap_statementContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `KLLParser.create_named_layer`.
+	 * Enter a parse tree produced by `KLLParser.layer_header`.
 	 * @param ctx the parse tree
 	 */
-	enterCreate_named_layer?: (ctx: Create_named_layerContext) => void;
+	enterLayer_header?: (ctx: Layer_headerContext) => void;
 	/**
-	 * Exit a parse tree produced by `KLLParser.create_named_layer`.
+	 * Exit a parse tree produced by `KLLParser.layer_header`.
 	 * @param ctx the parse tree
 	 */
-	exitCreate_named_layer?: (ctx: Create_named_layerContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `KLLParser.create_named_set`.
-	 * @param ctx the parse tree
-	 */
-	enterCreate_named_set?: (ctx: Create_named_setContext) => void;
-	/**
-	 * Exit a parse tree produced by `KLLParser.create_named_set`.
-	 * @param ctx the parse tree
-	 */
-	exitCreate_named_set?: (ctx: Create_named_setContext) => void;
+	exitLayer_header?: (ctx: Layer_headerContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `KLLParser.layer_block`.
@@ -178,16 +153,5 @@ export interface KLLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLayer_block?: (ctx: Layer_blockContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `KLLParser.set_block`.
-	 * @param ctx the parse tree
-	 */
-	enterSet_block?: (ctx: Set_blockContext) => void;
-	/**
-	 * Exit a parse tree produced by `KLLParser.set_block`.
-	 * @param ctx the parse tree
-	 */
-	exitSet_block?: (ctx: Set_blockContext) => void;
 }
 

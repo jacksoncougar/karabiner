@@ -5,47 +5,47 @@ grammar KLL;
 config: global_statement+ EOF;
 
 global_statement:
-	blank
+	empty
+	| swap_statement
 	| is_statement
 	| toggle_statement
 	| layer_block;
 
-blank: WS* EOL+;
+empty: (WS* EOL)+;
 
 is_statement:
-	CHORD_EXPRESSION IS_KEYWORD CHORD_EXPRESSION EOL+
-	| KEY_NAME IS_KEYWORD NOTHING_KEYWORD EOL+;
+	KEY_NAME IS_KEYWORD KEY_NAME EOL
+	| KEY_NAME IS_KEYWORD NOTHING_KEYWORD EOL;
 
 extends_statement:
-	EXTENDS_KEYWORD ID_NAME EOL+
-	| EXTENDS_KEYWORD NOTHING_KEYWORD EOL+;
+	EXTENDS_KEYWORD ID_NAME EOL
+	| EXTENDS_KEYWORD NOTHING_KEYWORD EOL;
 
-toggle_statement: KEY_NAME TOGGLES_KEYWORD ID_NAME EOL+;
+toggle_statement: TOGGLE_KEYWORD ID_NAME WITH_KEYWORD KEY_NAME EOL;
 
 set_statement: is_statement;
 
 layer_statement:
-	swap_statement
-	| extends_statement
+	empty
+	| swap_statement
 	| toggle_statement
 	| is_statement;
 
 layer_statements: layer_statement+;
 
-set_statements: set_statement+;
+swap_statement: SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME EOL;
 
-swap_statement: SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME EOL+;
+layer_header:
+	ID_NAME LAYER_KEYWORD EOL
+	| ID_NAME LAYER_KEYWORD extends_statement;
 
-create_named_layer: ID_NAME LAYER_KEYWORD EOL+;
-
-layer_block:
-	create_named_layer layer_statements DONE_KEYWORD EOL+;
+layer_block: layer_header layer_statements DONE_KEYWORD EOL;
 
 // TOKENS
 
 IS_KEYWORD: 'is';
 EXTENDS_KEYWORD: 'extends';
-TOGGLES_KEYWORD: 'toggles';
+TOGGLE_KEYWORD: 'toggle';
 LAYER_KEYWORD: 'layer';
 WHEN_KEYWORD: 'when';
 WITH_KEYWORD: 'with';
@@ -266,14 +266,6 @@ KEY_NAME:
 
 ID_NAME: [a-zA-Z0-9]+;
 
-fragment MODIFIER: 'ctrl' | 'alt' | 'shift';
-
-fragment KEY: ((MODIFIER '+')+)? KEY_NAME ('+' KEY_NAME)*;
-
-CHORD_EXPRESSION: KEY (WS KEY)*;
-
 EOL: '\r\n' | '\r' | '\n';
 
 WS: [\t ]+ -> skip;
-
-COMMENT: '#' [^EOL]+ EOL -> skip;
