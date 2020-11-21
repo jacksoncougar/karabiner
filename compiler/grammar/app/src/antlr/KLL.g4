@@ -6,40 +6,46 @@ config: global_statement+ EOF;
 
 global_statement:
 	empty
-	| swap_statement
-	| is_statement
-	| toggle_statement
+	| swap_statement EOL
+	| swap_statement EOL
+	| is_statement EOL
+	| toggle_statement EOL
 	| layer_block;
 
 empty: (WS* EOL)+;
 
 is_statement:
-	KEY_NAME IS_KEYWORD KEY_NAME EOL
-	| KEY_NAME IS_KEYWORD NOTHING_KEYWORD EOL;
+	KEY_NAME IS_KEYWORD KEY_NAME
+	| KEY_NAME IS_KEYWORD NOTHING_KEYWORD;
 
 extends_statement:
-	EXTENDS_KEYWORD ID_NAME EOL
-	| EXTENDS_KEYWORD NOTHING_KEYWORD EOL;
+	EXTENDS_KEYWORD ID_NAME
+	| EXTENDS_KEYWORD NOTHING_KEYWORD;
 
-toggle_statement: TOGGLE_KEYWORD ID_NAME WITH_KEYWORD KEY_NAME EOL;
+toggle_statement: TOGGLE_KEYWORD ID_NAME WITH_KEYWORD KEY_NAME;
 
 set_statement: is_statement;
 
 layer_statement:
 	empty
-	| swap_statement
-	| toggle_statement
-	| is_statement;
+	| swap_statement EOL
+	| swap_statement when_statement EOL
+	| toggle_statement EOL
+	| is_statement EOL;
 
 layer_statements: layer_statement+;
 
-swap_statement: SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME EOL;
+when_statement: WHEN_KEYWORD 'bundle is' STRING;
+
+swap_statement:
+	SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME
+	| SWAP_KEYWORD KEY_NAME AND_KEYWORD KEY_NAME when_statement;
 
 layer_header:
 	ID_NAME LAYER_KEYWORD EOL
 	| ID_NAME LAYER_KEYWORD extends_statement;
 
-layer_block: layer_header layer_statements DONE_KEYWORD EOL;
+layer_block: layer_header layer_statements DONE_KEYWORD;
 
 // TOKENS
 
@@ -267,5 +273,7 @@ KEY_NAME:
 ID_NAME: [a-zA-Z0-9]+;
 
 EOL: '\r\n' | '\r' | '\n';
+
+STRING: ~[ \r\n\t]+;
 
 WS: [\t ]+ -> skip;

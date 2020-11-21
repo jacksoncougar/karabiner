@@ -12,6 +12,7 @@ import { Toggle_statementContext } from "./KLLParser";
 import { Set_statementContext } from "./KLLParser";
 import { Layer_statementContext } from "./KLLParser";
 import { Layer_statementsContext } from "./KLLParser";
+import { When_statementContext } from "./KLLParser";
 import { Swap_statementContext } from "./KLLParser";
 import { Layer_headerContext } from "./KLLParser";
 import { Layer_blockContext } from "./KLLParser";
@@ -120,6 +121,17 @@ export interface KLLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLayer_statements?: (ctx: Layer_statementsContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `KLLParser.when_statement`.
+	 * @param ctx the parse tree
+	 */
+	enterWhen_statement?: (ctx: When_statementContext) => void;
+	/**
+	 * Exit a parse tree produced by `KLLParser.when_statement`.
+	 * @param ctx the parse tree
+	 */
+	exitWhen_statement?: (ctx: When_statementContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `KLLParser.swap_statement`.

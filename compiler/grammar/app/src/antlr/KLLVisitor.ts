@@ -12,6 +12,7 @@ import { Toggle_statementContext } from "./KLLParser";
 import { Set_statementContext } from "./KLLParser";
 import { Layer_statementContext } from "./KLLParser";
 import { Layer_statementsContext } from "./KLLParser";
+import { When_statementContext } from "./KLLParser";
 import { Swap_statementContext } from "./KLLParser";
 import { Layer_headerContext } from "./KLLParser";
 import { Layer_blockContext } from "./KLLParser";
@@ -87,6 +88,13 @@ export interface KLLVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitLayer_statements?: (ctx: Layer_statementsContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KLLParser.when_statement`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitWhen_statement?: (ctx: When_statementContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KLLParser.swap_statement`.
